@@ -1,0 +1,5 @@
+# make copy of this file and name it marketo.yml, then put here real key,
+# secret and endpoint to write new cassettes and make rspec pass
+access_key: "backupify1_183663304D9A0915ABF452"
+secret_key: "275809212215187844DD99AA00991167AACC3746D158"
+wsdl_endpoint: "https://572-ZRG-001.mktoapi.com/soap/mktows/2_2"

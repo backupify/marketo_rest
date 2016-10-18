@@ -1,0 +1,525 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://572-zrg-001.mktoapi.com/soap/mktows/2_2
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wsdl="http://www.marketo.com/mktows/"
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ins0="http://www.marketo.com/mktows/"
+        xmlns:ns1="http://www.marketo.com/mktows/"><env:Header><ns1:AuthenticationHeader><mktowsUserId>backupify1_183663304D9A0915ABF452</mktowsUserId><requestSignature>e9c293953798d288c6ef3af9e57de2290a5fb7e1</requestSignature><requestTimestamp>2013-12-17T18:59:40+00:00</requestTimestamp></ns1:AuthenticationHeader></env:Header><env:Body><ns1:paramsSyncMultipleLeads><leadRecordList><leadRecord><Email>john@backupify.com</Email><leadAttributeList><attribute><attrName>Email</attrName><attrValue>john@backupify.com</attrValue><attrType>string</attrType></attribute><attribute><attrName>FirstName</attrName><attrValue>john</attrValue><attrType>string</attrType></attribute><attribute><attrName>LastName</attrName><attrValue>kelly</attrValue><attrType>string</attrType></attribute></leadAttributeList></leadRecord><leadRecord><Email>admin@backupify.org</Email><leadAttributeList><attribute><attrName>Email</attrName><attrValue>admin@backupify.org</attrValue><attrType>string</attrType></attribute><attribute><attrName>FirstName</attrName><attrValue>Reed</attrValue><attrType>string</attrType></attribute><attribute><attrName>LastName</attrName><attrValue>Richards</attrValue><attrType>string</attrType></attribute></leadAttributeList></leadRecord></leadRecordList></ns1:paramsSyncMultipleLeads></env:Body></env:Envelope>
+    headers:
+      User-Agent:
+      - HTTPClient/1.0 (2.4.0, ruby 2.3.0 (2015-12-25))
+      Accept:
+      - "*/*"
+      Date:
+      - Tue, 17 Dec 2013 18:59:40 GMT
+      Pragma:
+      - no-cache
+      Soapaction:
+      - '""'
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Content-Length:
+      - '1604'
+  response:
+    status:
+      code: 500
+      message: Internal Server Error
+    headers:
+      Date:
+      - Mon, 22 Aug 2016 20:29:35 GMT
+      Server:
+      - Apache
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '494'
+      Connection:
+      - close
+      Content-Type:
+      - text/xml; charset=utf-8
+      Set-Cookie:
+      - BIGipServersjlweb-app_https=!5aPcSwPYdbyd6KLScTwF7CR830iJc80aKEAdvGah5hGZAsJu3ABWS1K5NbwvI0J32mNdem3eAjDW3NY=;
+        path=/
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="UTF-8"?>
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Body><SOAP-ENV:Fault><faultcode>SOAP-ENV:Client</faultcode><faultstring>20016 - Request expired</faultstring><detail><ns1:serviceException xmlns:ns1="http://www.marketo.com/mktows/"><name>mktServiceException</name><message>Request timestamp error (20016)</message><code>20016</code></ns1:serviceException></detail></SOAP-ENV:Fault></SOAP-ENV:Body></SOAP-ENV:Envelope>
+    http_version: 
+  recorded_at: Tue, 17 Dec 2013 18:59:40 GMT
+- request:
+    method: post
+    uri: https://572-zrg-001.mktoapi.com/soap/mktows/2_2
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wsdl="http://www.marketo.com/mktows/"
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ins0="http://www.marketo.com/mktows/"
+        xmlns:ns1="http://www.marketo.com/mktows/"><env:Header><ns1:AuthenticationHeader><mktowsUserId>backupify1_183663304D9A0915ABF452</mktowsUserId><requestSignature>e9c293953798d288c6ef3af9e57de2290a5fb7e1</requestSignature><requestTimestamp>2013-12-17T18:59:40+00:00</requestTimestamp></ns1:AuthenticationHeader></env:Header><env:Body><ns1:paramsSyncMultipleLeads><leadRecordList><leadRecord><Email>admin@backupify.org</Email><leadAttributeList><attribute><attrName>Email</attrName><attrValue>admin@backupify.org</attrValue><attrType>string</attrType></attribute><attribute><attrName>FirstName</attrName><attrValue>Reed</attrValue><attrType>string</attrType></attribute><attribute><attrName>LastName</attrName><attrValue>Richards</attrValue><attrType>string</attrType></attribute></leadAttributeList></leadRecord></leadRecordList></ns1:paramsSyncMultipleLeads></env:Body></env:Envelope>
+    headers:
+      User-Agent:
+      - HTTPClient/1.0 (2.4.0, ruby 2.3.0 (2015-12-25))
+      Accept:
+      - "*/*"
+      Date:
+      - Tue, 17 Dec 2013 18:59:40 GMT
+      Pragma:
+      - no-cache
+      Soapaction:
+      - '""'
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Content-Length:
+      - '1176'
+  response:
+    status:
+      code: 500
+      message: Internal Server Error
+    headers:
+      Date:
+      - Mon, 22 Aug 2016 20:29:36 GMT
+      Server:
+      - Apache
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '494'
+      Connection:
+      - close
+      Content-Type:
+      - text/xml; charset=utf-8
+      Set-Cookie:
+      - BIGipServersjlweb-app_https=!Fj43jizsdzmPVuXScTwF7CR830iJc2o6QjrmmDHoNiezIX/fmZvcJdLklpcqk7Q+RMDUkBsQwSA46Jw=;
+        path=/
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="UTF-8"?>
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Body><SOAP-ENV:Fault><faultcode>SOAP-ENV:Client</faultcode><faultstring>20016 - Request expired</faultstring><detail><ns1:serviceException xmlns:ns1="http://www.marketo.com/mktows/"><name>mktServiceException</name><message>Request timestamp error (20016)</message><code>20016</code></ns1:serviceException></detail></SOAP-ENV:Fault></SOAP-ENV:Body></SOAP-ENV:Envelope>
+    http_version: 
+  recorded_at: Tue, 17 Dec 2013 18:59:40 GMT
+- request:
+    method: post
+    uri: https://572-zrg-001.mktoapi.com/soap/mktows/2_2
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wsdl="http://www.marketo.com/mktows/"
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ins0="http://www.marketo.com/mktows/"
+        xmlns:ns1="http://www.marketo.com/mktows/"><env:Header><ns1:AuthenticationHeader><mktowsUserId>backupify1_183663304D9A0915ABF452</mktowsUserId><requestSignature>661d4234431e52e24957ade65a33b7678ee0afaa</requestSignature><requestTimestamp>2016-08-22T16:30:46-04:00</requestTimestamp></ns1:AuthenticationHeader></env:Header><env:Body><ns1:paramsSyncMultipleLeads><leadRecordList><leadRecord><Email>john@backupify.com</Email><leadAttributeList><attribute><attrName>Email</attrName><attrValue>john@backupify.com</attrValue><attrType>string</attrType></attribute><attribute><attrName>FirstName</attrName><attrValue>john</attrValue><attrType>string</attrType></attribute><attribute><attrName>LastName</attrName><attrValue>kelly</attrValue><attrType>string</attrType></attribute></leadAttributeList></leadRecord><leadRecord><Email>admin@backupify.org</Email><leadAttributeList><attribute><attrName>Email</attrName><attrValue>admin@backupify.org</attrValue><attrType>string</attrType></attribute><attribute><attrName>FirstName</attrName><attrValue>Reed</attrValue><attrType>string</attrType></attribute><attribute><attrName>LastName</attrName><attrValue>Richards</attrValue><attrType>string</attrType></attribute></leadAttributeList></leadRecord></leadRecordList></ns1:paramsSyncMultipleLeads></env:Body></env:Envelope>
+    headers:
+      User-Agent:
+      - HTTPClient/1.0 (2.4.0, ruby 2.3.0 (2015-12-25))
+      Accept:
+      - "*/*"
+      Date:
+      - Mon, 22 Aug 2016 20:30:46 GMT
+      Pragma:
+      - no-cache
+      Soapaction:
+      - '""'
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Content-Length:
+      - '1604'
+      Cookie:
+      - BIGipServersjlweb-app_https=!viCB4gMV0+fTdL3ScTwF7CR830iJcyfPLqlaqTBpkXhrAw1P0x4OFdA/P/o/BoHyDkEyWySv7POt91Y=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 22 Aug 2016 20:30:46 GMT
+      Server:
+      - Apache
+      Content-Length:
+      - '567'
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      Connection:
+      - close
+      Content-Type:
+      - text/xml; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://www.marketo.com/mktows/"><SOAP-ENV:Body><ns1:successSyncMultipleLeads><result><syncStatusList><syncStatus><leadId>89381</leadId><status>UPDATED</status><error xsi:nil="true"/></syncStatus><syncStatus><leadId>2383499</leadId><status>UPDATED</status><error xsi:nil="true"/></syncStatus></syncStatusList></result></ns1:successSyncMultipleLeads></SOAP-ENV:Body></SOAP-ENV:Envelope>
+    http_version: 
+  recorded_at: Mon, 22 Aug 2016 20:30:48 GMT
+- request:
+    method: post
+    uri: https://572-zrg-001.mktoapi.com/soap/mktows/2_2
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wsdl="http://www.marketo.com/mktows/"
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ins0="http://www.marketo.com/mktows/"
+        xmlns:ns1="http://www.marketo.com/mktows/"><env:Header><ns1:AuthenticationHeader><mktowsUserId>backupify1_183663304D9A0915ABF452</mktowsUserId><requestSignature>b7b0beb4f459168270bd7321301c128d94d8dc78</requestSignature><requestTimestamp>2016-08-22T16:30:48-04:00</requestTimestamp></ns1:AuthenticationHeader></env:Header><env:Body><ns1:paramsSyncMultipleLeads><leadRecordList><leadRecord><Email>admin@backupify.org</Email><leadAttributeList><attribute><attrName>Email</attrName><attrValue>admin@backupify.org</attrValue><attrType>string</attrType></attribute><attribute><attrName>FirstName</attrName><attrValue>Reed</attrValue><attrType>string</attrType></attribute><attribute><attrName>LastName</attrName><attrValue>Richards</attrValue><attrType>string</attrType></attribute></leadAttributeList></leadRecord></leadRecordList></ns1:paramsSyncMultipleLeads></env:Body></env:Envelope>
+    headers:
+      User-Agent:
+      - HTTPClient/1.0 (2.4.0, ruby 2.3.0 (2015-12-25))
+      Accept:
+      - "*/*"
+      Date:
+      - Mon, 22 Aug 2016 20:30:48 GMT
+      Pragma:
+      - no-cache
+      Soapaction:
+      - '""'
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Content-Length:
+      - '1176'
+      Cookie:
+      - BIGipServersjlweb-app_https=!viCB4gMV0+fTdL3ScTwF7CR830iJcyfPLqlaqTBpkXhrAw1P0x4OFdA/P/o/BoHyDkEyWySv7POt91Y=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 22 Aug 2016 20:30:48 GMT
+      Server:
+      - Apache
+      Content-Length:
+      - '473'
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      Connection:
+      - close
+      Content-Type:
+      - text/xml; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://www.marketo.com/mktows/"><SOAP-ENV:Body><ns1:successSyncMultipleLeads><result><syncStatusList><syncStatus><leadId>2383499</leadId><status>UPDATED</status><error xsi:nil="true"/></syncStatus></syncStatusList></result></ns1:successSyncMultipleLeads></SOAP-ENV:Body></SOAP-ENV:Envelope>
+    http_version: 
+  recorded_at: Mon, 22 Aug 2016 20:30:49 GMT
+- request:
+    method: post
+    uri: https://572-zrg-001.mktoapi.com/soap/mktows/2_2
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wsdl="http://www.marketo.com/mktows/"
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ins0="http://www.marketo.com/mktows/"
+        xmlns:ns1="http://www.marketo.com/mktows/"><env:Header><ns1:AuthenticationHeader><mktowsUserId>backupify1_183663304D9A0915ABF452</mktowsUserId><requestSignature>d2bd5557452b01dd712d0a57417dae4350a7ae6f</requestSignature><requestTimestamp>2016-08-22T16:32:42-04:00</requestTimestamp></ns1:AuthenticationHeader></env:Header><env:Body><ns1:paramsSyncMultipleLeads><leadRecordList><leadRecord><Email>john@backupify.com</Email><leadAttributeList><attribute><attrName>Email</attrName><attrValue>john@backupify.com</attrValue><attrType>string</attrType></attribute><attribute><attrName>FirstName</attrName><attrValue>john</attrValue><attrType>string</attrType></attribute><attribute><attrName>LastName</attrName><attrValue>kelly</attrValue><attrType>string</attrType></attribute></leadAttributeList></leadRecord><leadRecord><Email>admin@backupify.org</Email><leadAttributeList><attribute><attrName>Email</attrName><attrValue>admin@backupify.org</attrValue><attrType>string</attrType></attribute><attribute><attrName>FirstName</attrName><attrValue>Reed</attrValue><attrType>string</attrType></attribute><attribute><attrName>LastName</attrName><attrValue>Richards</attrValue><attrType>string</attrType></attribute></leadAttributeList></leadRecord></leadRecordList></ns1:paramsSyncMultipleLeads></env:Body></env:Envelope>
+    headers:
+      User-Agent:
+      - HTTPClient/1.0 (2.4.0, ruby 2.3.0 (2015-12-25))
+      Accept:
+      - "*/*"
+      Date:
+      - Mon, 22 Aug 2016 20:32:42 GMT
+      Pragma:
+      - no-cache
+      Soapaction:
+      - '""'
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Content-Length:
+      - '1604'
+      Cookie:
+      - BIGipServersjlweb-app_https=!Ux9JLFVDCtAwwGnScTwF7CR830iJc5XA0EkWUvdhL49jD+/hSsL0q954ri/XSnSL7j+W0xv2hHmhlOQ=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 22 Aug 2016 20:32:42 GMT
+      Server:
+      - Apache
+      Content-Length:
+      - '567'
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      Connection:
+      - close
+      Content-Type:
+      - text/xml; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://www.marketo.com/mktows/"><SOAP-ENV:Body><ns1:successSyncMultipleLeads><result><syncStatusList><syncStatus><leadId>89381</leadId><status>UPDATED</status><error xsi:nil="true"/></syncStatus><syncStatus><leadId>2383499</leadId><status>UPDATED</status><error xsi:nil="true"/></syncStatus></syncStatusList></result></ns1:successSyncMultipleLeads></SOAP-ENV:Body></SOAP-ENV:Envelope>
+    http_version: 
+  recorded_at: Mon, 22 Aug 2016 20:32:44 GMT
+- request:
+    method: post
+    uri: https://572-zrg-001.mktoapi.com/soap/mktows/2_2
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wsdl="http://www.marketo.com/mktows/"
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ins0="http://www.marketo.com/mktows/"
+        xmlns:ns1="http://www.marketo.com/mktows/"><env:Header><ns1:AuthenticationHeader><mktowsUserId>backupify1_183663304D9A0915ABF452</mktowsUserId><requestSignature>c9036cc942a7d3111883602dcd1e6b0405a3aa43</requestSignature><requestTimestamp>2016-08-22T16:32:44-04:00</requestTimestamp></ns1:AuthenticationHeader></env:Header><env:Body><ns1:paramsSyncMultipleLeads><leadRecordList><leadRecord><Email>admin@backupify.org</Email><leadAttributeList><attribute><attrName>Email</attrName><attrValue>admin@backupify.org</attrValue><attrType>string</attrType></attribute><attribute><attrName>FirstName</attrName><attrValue>Reed</attrValue><attrType>string</attrType></attribute><attribute><attrName>LastName</attrName><attrValue>Richards</attrValue><attrType>string</attrType></attribute></leadAttributeList></leadRecord></leadRecordList></ns1:paramsSyncMultipleLeads></env:Body></env:Envelope>
+    headers:
+      User-Agent:
+      - HTTPClient/1.0 (2.4.0, ruby 2.3.0 (2015-12-25))
+      Accept:
+      - "*/*"
+      Date:
+      - Mon, 22 Aug 2016 20:32:44 GMT
+      Pragma:
+      - no-cache
+      Soapaction:
+      - '""'
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Content-Length:
+      - '1176'
+      Cookie:
+      - BIGipServersjlweb-app_https=!Ux9JLFVDCtAwwGnScTwF7CR830iJc5XA0EkWUvdhL49jD+/hSsL0q954ri/XSnSL7j+W0xv2hHmhlOQ=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 22 Aug 2016 20:32:44 GMT
+      Server:
+      - Apache
+      Content-Length:
+      - '473'
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      Connection:
+      - close
+      Content-Type:
+      - text/xml; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://www.marketo.com/mktows/"><SOAP-ENV:Body><ns1:successSyncMultipleLeads><result><syncStatusList><syncStatus><leadId>2383499</leadId><status>UPDATED</status><error xsi:nil="true"/></syncStatus></syncStatusList></result></ns1:successSyncMultipleLeads></SOAP-ENV:Body></SOAP-ENV:Envelope>
+    http_version: 
+  recorded_at: Mon, 22 Aug 2016 20:32:45 GMT
+- request:
+    method: post
+    uri: https://572-zrg-001.mktoapi.com/soap/mktows/2_2
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wsdl="http://www.marketo.com/mktows/"
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ins0="http://www.marketo.com/mktows/"
+        xmlns:ns1="http://www.marketo.com/mktows/"><env:Header><ns1:AuthenticationHeader><mktowsUserId>backupify1_183663304D9A0915ABF452</mktowsUserId><requestSignature>dc662e15a2b0771767dee1fc1a1422da892a8b0a</requestSignature><requestTimestamp>2016-08-22T17:10:46-04:00</requestTimestamp></ns1:AuthenticationHeader></env:Header><env:Body><ns1:paramsSyncMultipleLeads><leadRecordList><leadRecord><Email>john@backupify.com</Email><leadAttributeList><attribute><attrName>Email</attrName><attrValue>john@backupify.com</attrValue><attrType>string</attrType></attribute><attribute><attrName>FirstName</attrName><attrValue>john</attrValue><attrType>string</attrType></attribute><attribute><attrName>LastName</attrName><attrValue>kelly</attrValue><attrType>string</attrType></attribute></leadAttributeList></leadRecord><leadRecord><Email>admin@backupify.org</Email><leadAttributeList><attribute><attrName>Email</attrName><attrValue>admin@backupify.org</attrValue><attrType>string</attrType></attribute><attribute><attrName>FirstName</attrName><attrValue>Reed</attrValue><attrType>string</attrType></attribute><attribute><attrName>LastName</attrName><attrValue>Richards</attrValue><attrType>string</attrType></attribute></leadAttributeList></leadRecord></leadRecordList></ns1:paramsSyncMultipleLeads></env:Body></env:Envelope>
+    headers:
+      User-Agent:
+      - HTTPClient/1.0 (2.4.0, ruby 2.3.0 (2015-12-25))
+      Accept:
+      - "*/*"
+      Date:
+      - Mon, 22 Aug 2016 21:10:46 GMT
+      Pragma:
+      - no-cache
+      Soapaction:
+      - '""'
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Content-Length:
+      - '1604'
+      Cookie:
+      - BIGipServersjlweb-app_https=!IVwQ2U/u8b7/lifScTwF7CR830iJcwJcnC9kIQ/2qKTtD3RryUHKrx27m91YnIAu8yLsSQeTH/6Fqog=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 22 Aug 2016 21:10:46 GMT
+      Server:
+      - Apache
+      Content-Length:
+      - '567'
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      Connection:
+      - close
+      Content-Type:
+      - text/xml; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://www.marketo.com/mktows/"><SOAP-ENV:Body><ns1:successSyncMultipleLeads><result><syncStatusList><syncStatus><leadId>89381</leadId><status>UPDATED</status><error xsi:nil="true"/></syncStatus><syncStatus><leadId>2383499</leadId><status>UPDATED</status><error xsi:nil="true"/></syncStatus></syncStatusList></result></ns1:successSyncMultipleLeads></SOAP-ENV:Body></SOAP-ENV:Envelope>
+    http_version: 
+  recorded_at: Mon, 22 Aug 2016 21:10:48 GMT
+- request:
+    method: post
+    uri: https://572-zrg-001.mktoapi.com/soap/mktows/2_2
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wsdl="http://www.marketo.com/mktows/"
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ins0="http://www.marketo.com/mktows/"
+        xmlns:ns1="http://www.marketo.com/mktows/"><env:Header><ns1:AuthenticationHeader><mktowsUserId>backupify1_183663304D9A0915ABF452</mktowsUserId><requestSignature>be539d8cfee3a67be973239d9b4816e48988fde6</requestSignature><requestTimestamp>2016-08-22T17:10:48-04:00</requestTimestamp></ns1:AuthenticationHeader></env:Header><env:Body><ns1:paramsSyncMultipleLeads><leadRecordList><leadRecord><Email>admin@backupify.org</Email><leadAttributeList><attribute><attrName>Email</attrName><attrValue>admin@backupify.org</attrValue><attrType>string</attrType></attribute><attribute><attrName>FirstName</attrName><attrValue>Reed</attrValue><attrType>string</attrType></attribute><attribute><attrName>LastName</attrName><attrValue>Richards</attrValue><attrType>string</attrType></attribute></leadAttributeList></leadRecord></leadRecordList></ns1:paramsSyncMultipleLeads></env:Body></env:Envelope>
+    headers:
+      User-Agent:
+      - HTTPClient/1.0 (2.4.0, ruby 2.3.0 (2015-12-25))
+      Accept:
+      - "*/*"
+      Date:
+      - Mon, 22 Aug 2016 21:10:48 GMT
+      Pragma:
+      - no-cache
+      Soapaction:
+      - '""'
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Content-Length:
+      - '1176'
+      Cookie:
+      - BIGipServersjlweb-app_https=!IVwQ2U/u8b7/lifScTwF7CR830iJcwJcnC9kIQ/2qKTtD3RryUHKrx27m91YnIAu8yLsSQeTH/6Fqog=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 22 Aug 2016 21:10:48 GMT
+      Server:
+      - Apache
+      Content-Length:
+      - '473'
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      Connection:
+      - close
+      Content-Type:
+      - text/xml; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://www.marketo.com/mktows/"><SOAP-ENV:Body><ns1:successSyncMultipleLeads><result><syncStatusList><syncStatus><leadId>2383499</leadId><status>UPDATED</status><error xsi:nil="true"/></syncStatus></syncStatusList></result></ns1:successSyncMultipleLeads></SOAP-ENV:Body></SOAP-ENV:Envelope>
+    http_version: 
+  recorded_at: Mon, 22 Aug 2016 21:10:50 GMT
+- request:
+    method: post
+    uri: https://572-zrg-001.mktoapi.com/soap/mktows/2_2
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wsdl="http://www.marketo.com/mktows/"
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ins0="http://www.marketo.com/mktows/"
+        xmlns:ns1="http://www.marketo.com/mktows/"><env:Header><ns1:AuthenticationHeader><mktowsUserId>backupify1_183663304D9A0915ABF452</mktowsUserId><requestSignature>6c9e8f929c0c7d7aa75745ab720fc1a99ba80364</requestSignature><requestTimestamp>2016-08-22T17:47:37-04:00</requestTimestamp></ns1:AuthenticationHeader></env:Header><env:Body><ns1:paramsSyncMultipleLeads><leadRecordList><leadRecord><Email>john@backupify.com</Email><leadAttributeList><attribute><attrName>Email</attrName><attrValue>john@backupify.com</attrValue><attrType>string</attrType></attribute><attribute><attrName>FirstName</attrName><attrValue>john</attrValue><attrType>string</attrType></attribute><attribute><attrName>LastName</attrName><attrValue>kelly</attrValue><attrType>string</attrType></attribute></leadAttributeList></leadRecord><leadRecord><Email>admin@backupify.org</Email><leadAttributeList><attribute><attrName>Email</attrName><attrValue>admin@backupify.org</attrValue><attrType>string</attrType></attribute><attribute><attrName>FirstName</attrName><attrValue>Reed</attrValue><attrType>string</attrType></attribute><attribute><attrName>LastName</attrName><attrValue>Richards</attrValue><attrType>string</attrType></attribute></leadAttributeList></leadRecord></leadRecordList></ns1:paramsSyncMultipleLeads></env:Body></env:Envelope>
+    headers:
+      User-Agent:
+      - HTTPClient/1.0 (2.4.0, ruby 2.3.0 (2015-12-25))
+      Accept:
+      - "*/*"
+      Date:
+      - Mon, 22 Aug 2016 21:47:37 GMT
+      Pragma:
+      - no-cache
+      Soapaction:
+      - '""'
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Content-Length:
+      - '1604'
+      Cookie:
+      - BIGipServersjlweb-app_https=!jMIPehIPHMnX+BbScTwF7CR830iJc5KVB4Aea73nNCjAk+pOLm+HFHMSipwVCtNM6lzXTsk6dDlYKeI=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 22 Aug 2016 21:47:38 GMT
+      Server:
+      - Apache
+      Content-Length:
+      - '567'
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      Connection:
+      - close
+      Content-Type:
+      - text/xml; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://www.marketo.com/mktows/"><SOAP-ENV:Body><ns1:successSyncMultipleLeads><result><syncStatusList><syncStatus><leadId>89381</leadId><status>UPDATED</status><error xsi:nil="true"/></syncStatus><syncStatus><leadId>2383499</leadId><status>UPDATED</status><error xsi:nil="true"/></syncStatus></syncStatusList></result></ns1:successSyncMultipleLeads></SOAP-ENV:Body></SOAP-ENV:Envelope>
+    http_version: 
+  recorded_at: Mon, 22 Aug 2016 21:47:39 GMT
+- request:
+    method: post
+    uri: https://572-zrg-001.mktoapi.com/soap/mktows/2_2
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wsdl="http://www.marketo.com/mktows/"
+        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ins0="http://www.marketo.com/mktows/"
+        xmlns:ns1="http://www.marketo.com/mktows/"><env:Header><ns1:AuthenticationHeader><mktowsUserId>backupify1_183663304D9A0915ABF452</mktowsUserId><requestSignature>cfd2637bb60e3953aad70e1deab36d500dbdbaac</requestSignature><requestTimestamp>2016-08-22T17:47:39-04:00</requestTimestamp></ns1:AuthenticationHeader></env:Header><env:Body><ns1:paramsSyncMultipleLeads><leadRecordList><leadRecord><Email>admin@backupify.org</Email><leadAttributeList><attribute><attrName>Email</attrName><attrValue>admin@backupify.org</attrValue><attrType>string</attrType></attribute><attribute><attrName>FirstName</attrName><attrValue>Reed</attrValue><attrType>string</attrType></attribute><attribute><attrName>LastName</attrName><attrValue>Richards</attrValue><attrType>string</attrType></attribute></leadAttributeList></leadRecord></leadRecordList></ns1:paramsSyncMultipleLeads></env:Body></env:Envelope>
+    headers:
+      User-Agent:
+      - HTTPClient/1.0 (2.4.0, ruby 2.3.0 (2015-12-25))
+      Accept:
+      - "*/*"
+      Date:
+      - Mon, 22 Aug 2016 21:47:39 GMT
+      Pragma:
+      - no-cache
+      Soapaction:
+      - '""'
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Content-Length:
+      - '1176'
+      Cookie:
+      - BIGipServersjlweb-app_https=!jMIPehIPHMnX+BbScTwF7CR830iJc5KVB4Aea73nNCjAk+pOLm+HFHMSipwVCtNM6lzXTsk6dDlYKeI=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 22 Aug 2016 21:47:39 GMT
+      Server:
+      - Apache
+      Content-Length:
+      - '473'
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      Connection:
+      - close
+      Content-Type:
+      - text/xml; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://www.marketo.com/mktows/"><SOAP-ENV:Body><ns1:successSyncMultipleLeads><result><syncStatusList><syncStatus><leadId>2383499</leadId><status>UPDATED</status><error xsi:nil="true"/></syncStatus></syncStatusList></result></ns1:successSyncMultipleLeads></SOAP-ENV:Body></SOAP-ENV:Envelope>
+    http_version: 
+  recorded_at: Mon, 22 Aug 2016 21:47:41 GMT
+recorded_with: VCR 3.0.3
