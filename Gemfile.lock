@@ -2,31 +2,25 @@ PATH
   remote: .
   specs:
     marketo (0.1.1)
-      savon
+      faraday
 
 GEM
   remote: http://rubygems.org/
   specs:
     addressable (2.4.0)
-    akami (1.2.2)
-      gyoku (>= 0.4.0)
-      nokogiri
-    builder (3.2.2)
+    coderay (1.1.1)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     diff-lcs (1.2.5)
-    gyoku (0.4.6)
-      builder (>= 2.1.2)
+    faraday (0.10.0)
+      multipart-post (>= 1.2, < 3)
     hashdiff (0.3.0)
-    httpi (1.1.1)
-      rack
-    mini_portile2 (2.1.0)
-    nokogiri (1.6.8)
-      mini_portile2 (~> 2.1.0)
-      pkg-config (~> 1.1.7)
-    nori (1.1.5)
-    pkg-config (1.1.7)
-    rack (2.0.1)
+    method_source (0.8.2)
+    multipart-post (2.0.0)
+    pry (0.10.4)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
     rspec (3.5.0)
       rspec-core (~> 3.5.0)
       rspec-expectations (~> 3.5.0)
@@ -41,19 +35,9 @@ GEM
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
     safe_yaml (1.0.4)
-    savon (1.2.0)
-      akami (~> 1.2.0)
-      builder (>= 2.1.2)
-      gyoku (~> 0.4.5)
-      httpi (~> 1.1.0)
-      nokogiri (>= 1.4.0)
-      nori (~> 1.1.0)
-      wasabi (~> 2.5.0)
+    slop (3.6.0)
     timecop (0.8.1)
     vcr (3.0.3)
-    wasabi (2.5.1)
-      httpi (~> 1.0)
-      nokogiri (>= 1.4.0)
     webmock (2.1.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -64,10 +48,11 @@ PLATFORMS
 
 DEPENDENCIES
   marketo!
+  pry
   rspec
   timecop
   vcr
   webmock
 
 BUNDLED WITH
-   1.11.2
+   1.12.5
