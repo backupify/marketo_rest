@@ -1,10 +1,8 @@
-require "savon"
-require "openssl/digest"
-
 require "marketo/client"
 require "marketo/interface"
-require "marketo/lead"
+require "marketo/identity_service"
 require "marketo/config"
+require "marketo/api_error"
 
 module Marketo
   extend self

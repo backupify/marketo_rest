@@ -1,29 +1,19 @@
 module Marketo
   class Client
-    extend Savon::Model
-
-    actions :describe_m_object, :get_campaigns_for_source, :get_lead, :get_lead_activity, :get_lead_changes, :get_multiple_leads, :list_m_objects, :list_operation, :request_campaign, :sync_lead, :sync_multiple_leads
-
-    attr_accessor :client
-    attr_accessor :header
-    attr_accessor :cookie
+    OPEN_TIMEOUT = 2
+    RESPONSE_TIMEOUT = 30
 
     def self.new_marketo_client(params = {})
       config = Marketo.config
       config.merge_params!(params)
 
-      @client = Savon::Client.new do
-        http.headers["Pragma"] = "no-cache"
-        wsdl.endpoint = config.wsdl_endpoint
-        wsdl.document = config.wsdl_document
-      end
+      @client = Faraday.new(url: config.rest_endpoint, request: {
+        open_timeout: OPEN_TIMEOUT,
+        timeout: RESPONSE_TIMEOUT
+      })
+      @identity_service = IdentityService.new(config)
 
-      @client.config.soap_version = 1
-      @client.http.open_timeout = 240
-      @client.http.read_timeout = 240
-      @header = AuthenticationHeader.new(config.access_key, config.secret_key)
-
-      Interface.new(@client, @header)
+      Interface.new(@client, @identity_service)
     end
   end
 end

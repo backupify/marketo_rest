@@ -1,183 +1,162 @@
-require_relative 'spec_helper'
+require_relative "spec_helper"
 require "marketo"
 require "yaml"
 require "erb"
 
-describe Marketo do
-  describe Marketo::Interface do
-    IDNUM = 1000074
-    EMAIL = "john@backupify.com"
-    COOKIE = "id:572-ZRG-001&token:_mch-localhost-1306412206125-92040"
-    USER = { :email => "john@backupify.com", :first_name => "john", :last_name => "kelly" }
+describe Marketo::Interface do
+  PROGRAM = "BASS Sync Testing"
+  COOKIE = "id:572-ZRG-001&token:_mch-localhost-1306412206125-92040"
+  USER = { "email" => "john@backupify.com", "firstName" => "john", "lastName" => "kelly", "company" => "Backupify" }
+  USER_ID = 89381
 
-    before(:all) do
-      # To test:
-      # Remove Timecop.freeze or setup Time.now.
-      # Record VCR cassettes with actual responses from Marketo.
-      # Setup Timecop with time of requests to eliminate 'Request expired' Error.
-      Timecop.freeze(Time.parse('17 Dec 2013 18:59:40 GMT'))
-      @interface = Marketo::Client.new_marketo_client
+  before(:context) do
+    @config = Marketo.config
+
+    @client = Faraday.new(url: @config.rest_endpoint)
+    @identity_service = Marketo::IdentityService.new(@config)
+    @interface = Marketo::Interface.new(@client, @identity_service)
+  end
+
+  describe "get_lead_by_id" do
+    before do
+      VCR.insert_cassette "get_lead_by_id", :record => :new_episodes
     end
 
-    after(:all) do
-      Timecop.return
+    it "should get lead by id" do
+      result = @interface.get_lead_by_id(USER_ID)
+      expect(result["id"]).to eq(USER_ID)
     end
 
-    describe 'Client timeouts' do
-      it 'should set open timeout to 240 seconds' do
-        @interface.client.http.open_timeout.should be_equal 240
-      end
-
-      it 'should set read timeout to 240 seconds' do
-        @interface.client.http.read_timeout.should be_equal 240
-      end
+    it "should return error if no id is provided" do
+      expect { @interface.get_lead_by_id(nil) }.to raise_exception(ArgumentError, "ID must be provided")
     end
 
-    describe 'Exception handling' do
-      before do
-        VCR.insert_cassette "fault", :record => :new_episodes
-      end
+    after do
+      VCR.eject_cassette "get_lead_by_id"
+    end
+  end
 
-      it "should return error if no id is provided" do
-        lambda { @interface.get_lead_by_id(nil) }.should raise_exception(Exception, "ID must be provided")
-      end
-
-      it "should return error if no email is provided" do
-        lambda { @interface.get_lead_by_email(nil) }.should raise_exception(Exception, "Email must be provided")
-      end
-
-      it "should return SOAP fault if email is invalid" do
-        lambda { @interface.get_lead_by_email("JUNK") }.should raise_exception(Savon::SOAP::Fault)
-      end
-
-      it "should return error if no email is provided on sync lead" do
-        lambda { @interface.sync_lead(nil, "", {}) }.should raise_exception(Exception, "Email must be provided")
-      end
-
-      after do
-        VCR.eject_cassette
-      end
+  describe "get_lead_by_email" do
+    before do
+      VCR.insert_cassette "get_lead_by_email", :record => :new_episodes
     end
 
-    describe 'Lead' do
-      before do
-        VCR.insert_cassette "lead", :record => :new_episodes
-      end
-
-      it "should get lead by id" do
-        lead_record = Marketo::Lead.new(nil, IDNUM)
-        retVal = @interface.get_lead_by_id(IDNUM)
-        retVal.should be_a_kind_of(Marketo::Lead)
-        retVal.idnum.should == IDNUM
-      end
-
-      it "should get lead by email" do
-        lead_record = Marketo::Lead.new(EMAIL)
-        retVal = @interface.get_lead_by_email(EMAIL)
-        retVal.should be_a_kind_of(Marketo::Lead)
-        retVal.email.should == EMAIL
-      end
-
-      after do
-        VCR.eject_cassette
-      end
+    it "should get lead by email" do
+      result = @interface.get_lead_by_email(USER["email"])
+      expect(result["email"]).to eq(USER["email"])
     end
 
-    describe 'Sync' do
-      before do
-        VCR.insert_cassette "sync", :record => :new_episodes
-      end
-
-      it "should sync lead with Marketo" do
-        retVal = @interface.sync_lead(USER[:email], COOKIE, { "FirstName"=>USER[:first_name],
-                                                           "LastName"=>USER[:last_name],
-                                                           "Company"=>"Backupify" })
-        retVal.should be_a_kind_of(Marketo::Lead)
-      end
-
-      after do
-        VCR.eject_cassette
-      end
+    it "should return error if no email is provided" do
+      expect { @interface.get_lead_by_email(nil) }.to raise_exception(ArgumentError, "Email must be provided")
     end
 
-    describe 'List' do
-      before do
-        VCR.insert_cassette "list", :record => :new_episodes
-      end
+    after do
+      VCR.eject_cassette "get_lead_by_email"
+    end
+  end
 
-      it "should add lead to marketo list" do
-        @interface.add_lead_to_list(IDNUM, "Inbound Signups").should == true
-      end
-
-      after do
-        VCR.eject_cassette
-      end
+  describe "sync_lead" do
+    before do
+      VCR.insert_cassette "sync_lead", :record => :new_episodes
     end
 
-    describe "Multy sync" do
-      before do
-        VCR.insert_cassette "multy_sync", :record => :new_episodes
-      end
+    it "should sync lead with Marketo" do
+      result = @interface.sync_lead(USER, PROGRAM, COOKIE)
+      expected_result = [
+        { "id" => 89381, "status" => "updated" }
+      ]
 
-      it "should sync multiple leads with Marketo" do
-        multi_users = [
-          { "Email" => "john@backupify.com", "FirstName" => "john", "LastName" => "kelly" },
-          { "Email" => "admin@backupify.org", "FirstName" => "Reed", "LastName" => "Richards" }
-        ]
-        test_values = [
-          {:lead_id=>"1000074", :status=>"UPDATED", :error=>nil},
-          {:lead_id=>"1000085", :status=>"UPDATED", :error=>nil}
-        ]
-
-        response = @interface.sync_multiple multi_users
-
-        response.should == test_values
-      end
-
-      it "should sync single lead and return array as result" do
-        single_user = [{ "Email" => "admin@backupify.org", "FirstName" => "Reed", "LastName" => "Richards" }]
-        test_value = [{:lead_id=>"1000085", :status=>"UPDATED", :error=>nil}]
-
-        response = @interface.sync_multiple single_user
-        response.should == test_value
-      end
-
-      it "should raise exception if empty array is passed" do
-        err_text = "Empty leads hash, nothing to sync"
-        lambda { @interface.sync_multiple(nil) }.should raise_exception(Exception, err_text)
-      end
-
-      after do
-        VCR.eject_cassette
-      end
+      expect(result).to eq(expected_result)
     end
 
-    describe 'to_hash' do
-      it 'should update timestamp on every call to avoid request expiration' do
-        @interface = Marketo::Client.new_marketo_client
-
-        first_timestamp = @interface.instance_variable_get(:@header).to_hash["requestTimestamp"]
-        Timecop.freeze(Time.now + 10)
-        second_timestamp = @interface.instance_variable_get(:@header).to_hash["requestTimestamp"]
-
-        first_timestamp.should_not == second_timestamp
-
-        Timecop.return
-      end
+    it "should raise exception if no attributes passed" do
+      err_text = "No attributes to sync"
+      expect { @interface.sync_lead(nil, "program") }.to raise_exception(ArgumentError, err_text)
     end
 
-    describe 'normalize_response' do
-      it 'should return array if response is array' do
-        response = [{:lead => 12345, :status => 'UPDATED', :error => nil},
-                    {:lead => 12346, :status => 'SKIPPED', :error => 'Not uniq'}]
+    # it "should associate the lead with the cookie" do
+    #   @interface.sync_lead(USER["email"], COOKIE, @attributes)
+    #   lead = @interface.get_lead_by_email(USER["email"])
+    #   binding.pry
+    # end
 
-        @interface.send(:normalize_response, response).should == response
-      end
+    # it "should associate the lead with the program name" do
+    #   @interface.sync_lead(USER["email"], COOKIE, @attributes)
+    #   lead = @interface.get_lead_by_email(USER["email"])
+    #   binding.pry
+    # end
 
-      it 'should return one element array if response is hash' do
-        response = {:lead => 12345, :status => 'UPDATED', :error => nil}
-        @interface.send(:normalize_response, response).should == [response]
-      end
+    after do
+      VCR.eject_cassette "sync_lead"
+    end
+  end
+
+  describe "sync_multiple" do
+    before do
+      VCR.insert_cassette "sync_multiple", :record => :new_episodes
+    end
+
+    it "should sync multiple leads with Marketo" do
+      synced_users = [
+        { "email" => "john@backupify.com", "firstName" => "john", "lastName" => "kelly" },
+        { "email" => "admin@backupify.org", "firstName" => "Reed", "lastName" => "Richards" }
+      ]
+      expected_results = [
+        { "id" => 89381, "status" => "updated" },
+        { "id" => 2383499, "status" => "updated" }
+      ]
+
+      results = @interface.sync_multiple synced_users
+      expect(results).to eq(expected_results)
+    end
+
+    it "should raise exception if empty array is passed" do
+      err_text = "Empty leads hash, nothing to sync"
+      expect { @interface.sync_multiple([]) }.to raise_exception(ArgumentError, err_text)
+    end
+
+    after do
+      VCR.eject_cassette "sync_multiple"
+    end
+  end
+
+  describe "authorization" do
+    before do
+      VCR.insert_cassette "authorization", :record => :new_episodes
+    end
+
+    it "should re-authorize before request if not authorized" do
+      expect(@identity_service).to receive(:authenticated?) { false }
+
+      expect(@identity_service).to receive(:authenticate!).and_call_original
+
+      @interface.get_lead_by_id(USER_ID)
+    end
+
+    after do
+      VCR.eject_cassette "authorization"
+    end
+  end
+
+  describe "failure handling" do
+    before do
+      allow(@identity_service).to receive(:authenticated?) { true }
+      @stubs = Faraday::Adapter::Test::Stubs.new
+      stubbed_client = Faraday.new { |builder| builder.adapter :test, @stubs }
+      @interface = Marketo::Interface.new(stubbed_client, @identity_service)
+    end
+
+    it "should return an APIError in the case of a non-200 HTTP response code" do
+      @stubs.get("/rest/v1/leads/#{USER_ID}.json") { [500, {}, '{}'] }
+
+      expect { @interface.get_lead_by_id(USER_ID) }.to raise_error(Marketo::ApiError)
+    end
+
+    it "should return an ApiError in the case of a non-successful Marketo response code" do
+      body = JSON.generate({ "success" => false, "errors" => [{"code" => 607, "message" => "Daily quota reached"}] })
+      @stubs.get("/rest/v1/leads/#{USER_ID}.json") { [200, {}, body] }
+
+      expect { @interface.get_lead_by_id(USER_ID) }.to raise_error(Marketo::ApiError)
     end
   end
 end

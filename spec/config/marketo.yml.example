@@ -1,5 +1,6 @@
-# make copy of this file and name it marketo.yml, then put here real key,
-# secret and endpoint to write new cassettes and make rspec pass
-access_key: "test_key"
-secret_key: "test_secret"
-wsdl_endpoint: "https://some-url.mktoapi.com/soap/mktows/2_2"
+# Make a copy of this file and name it marketo.yml, then replace
+# with the real client ID and secret and endpoints to test.
+rest_endpoint: "https://123-ABC-001.mktorest.com/rest"
+identity_endpoint: "https://123-ABC-001.mktorest.com/identity"
+client_id: "testid"
+client_secret: "testsecret"
