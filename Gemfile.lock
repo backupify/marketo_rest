@@ -1,26 +1,20 @@
 PATH
   remote: .
   specs:
-    marketo (0.1.1)
+    marketo_rest (0.1.1)
       faraday
 
 GEM
   remote: http://rubygems.org/
   specs:
     addressable (2.4.0)
-    coderay (1.1.1)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     diff-lcs (1.2.5)
     faraday (0.10.0)
       multipart-post (>= 1.2, < 3)
     hashdiff (0.3.0)
-    method_source (0.8.2)
     multipart-post (2.0.0)
-    pry (0.10.4)
-      coderay (~> 1.1.0)
-      method_source (~> 0.8.1)
-      slop (~> 3.4)
     rspec (3.5.0)
       rspec-core (~> 3.5.0)
       rspec-expectations (~> 3.5.0)
@@ -35,7 +29,6 @@ GEM
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
     safe_yaml (1.0.4)
-    slop (3.6.0)
     timecop (0.8.1)
     vcr (3.0.3)
     webmock (2.1.0)
@@ -47,8 +40,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  marketo!
-  pry
+  marketo_rest!
   rspec
   timecop
   vcr
