@@ -69,22 +69,31 @@ describe Marketo::Interface do
       expect(result).to eq(expected_result)
     end
 
+    describe "cookie" do
+      it "should add a valid cookie to the lead in the body" do
+        RSpec::Matchers.define :has_cookie_in_lead do |cookie|
+          match { |options| cookie.include?(options[:body]["input"].first["cookie"]) }
+        end
+
+        expect(@interface).to receive(:send_request).with(:post, "/rest/v1/leads/push.json", has_cookie_in_lead(COOKIE))
+        @interface.sync_lead(USER, PROGRAM, COOKIE)
+      end
+    end
+
+    describe "program" do
+      it "should add the program to the body" do
+        RSpec::Matchers.define :has_program_in_body do |program|
+          match { |options| options[:body]["programName"] == program }
+        end
+        expect(@interface).to receive(:send_request).with(:post, "/rest/v1/leads/push.json", has_program_in_body(PROGRAM))
+        @interface.sync_lead(USER, PROGRAM, COOKIE)
+      end
+    end
+
     it "should raise exception if no attributes passed" do
       err_text = "No attributes to sync"
       expect { @interface.sync_lead(nil, "program") }.to raise_exception(ArgumentError, err_text)
     end
-
-    # it "should associate the lead with the cookie" do
-    #   @interface.sync_lead(USER["email"], COOKIE, @attributes)
-    #   lead = @interface.get_lead_by_email(USER["email"])
-    #   binding.pry
-    # end
-
-    # it "should associate the lead with the program name" do
-    #   @interface.sync_lead(USER["email"], COOKIE, @attributes)
-    #   lead = @interface.get_lead_by_email(USER["email"])
-    #   binding.pry
-    # end
 
     after do
       VCR.eject_cassette "sync_lead"
