@@ -98,10 +98,12 @@ module Marketo
       if(cookie.nil? || (cookie.include?("token:") == false))
         _cookie = nil
       else
-        _cookie = cookie.slice!(cookie.index("token:")..-1)
+        _cookie = cookie.slice(cookie.index("token:")..-1)
       end
 
-      _attributes = attributes.merge({ "cookie" => _cookie }) unless _cookie.nil?
+      _attributes = attributes
+      _attributes.merge!({ "cookie" => _cookie }) unless _cookie.nil?
+
       _body = { "input" => [_attributes] }
       _body.merge!({ "programName" => program }) unless program.nil?
 
