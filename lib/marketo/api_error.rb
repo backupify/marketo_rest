@@ -26,7 +26,7 @@ module Marketo
     end
 
     def self.from_errors(errors)
-      new(:response_body => errors)
+      new(:response_body => errors, :message => errors.to_s)
     end
   end
 end
