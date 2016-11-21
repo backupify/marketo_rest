@@ -15,6 +15,12 @@ describe Marketo::Interface do
     @client = Faraday.new(url: @config.rest_endpoint)
     @identity_service = Marketo::IdentityService.new(@config)
     @interface = Marketo::Interface.new(@client, @identity_service)
+
+    # Delete this cassette if the access token has expired and you want to re-record.
+    VCR.use_cassette "get_auth_token", :record => :new_episodes do
+      access_token = @identity_service.authenticate!
+      @client.authorization(:Bearer, access_token)
+    end
   end
 
   describe "get_lead_by_id" do
@@ -129,9 +135,9 @@ describe Marketo::Interface do
     end
   end
 
-  describe "authorization" do
+  describe "authentication" do
     before do
-      VCR.insert_cassette "authorization", :record => :new_episodes
+      VCR.insert_cassette "authentication", :record => :new_episodes
     end
 
     it "should re-authorize before request if not authorized" do
@@ -143,7 +149,7 @@ describe Marketo::Interface do
     end
 
     after do
-      VCR.eject_cassette "authorization"
+      VCR.eject_cassette "authentication"
     end
   end
 
