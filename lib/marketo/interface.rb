@@ -1,178 +1,128 @@
+# An interface to a few endpoint of the Marketo REST API.
+# http://developers.marketo.com/rest-api/endpoint-reference/lead-database-endpoint-reference/
+
+require 'faraday'
+require 'json'
+
 module Marketo
-  require "openssl"
-
   class Interface
-    attr_accessor :client
-
-    def initialize(client, header)
+    def initialize(client, identity_service)
       @client = client
-      @header = header
+      @identity_service = identity_service
     end
 
-    def send_request(namespace, body)
-      response = @client.request(namespace) do |soap|
-        soap.namespaces["xmlns:ns1"] = "http://www.marketo.com/mktows/"
-        soap.body = body
-        soap.header["ns1:AuthenticationHeader"] = @header.to_hash
+    def send_request(method, endpoint, params: {}, body: nil)
+      check_authorization!
+
+      response = @client.send(method) do |req|
+        req.url endpoint
+        req.headers['Content-Type'] = 'application/json'
+        req.body = body.to_json
+        req.params.merge! params
+      end
+
+      handle_failure! response
+    end
+
+    def check_authorization!
+      unless @identity_service.authenticated?
+        access_token = @identity_service.authenticate!
+        @client.authorization(:Bearer, access_token)
       end
     end
 
-    public
+    def handle_failure!(response)
+      response_body = JSON.parse(response.body)
 
+      if response.status != 200
+        raise ApiError.from_status(response.status, response.reason_phrase)
+      elsif response_body["success"] == false
+        raise ApiError.from_errors(response_body["errors"])
+      else
+        response_body["result"]
+      end
+    end
+
+    # Gets a lead from Marketo using a Marketo ID.
+    #
+    # @param Id [Fixnum] The Marketo ID of the lead to fetch.
+    # @return [Hash, nil] The lead's attributes, or nil if the lead is not found.
+    # @note It is possible that this can return more than one lead - this only returns the first.
+    # @raise [ArgumentError] if no ID is provided
+    # @raise [Marketo::ApiError] if Marketo returns an error
     def get_lead_by_id(id)
-      raise Exception, "ID must be provided" if id.nil?
+      raise ArgumentError, "ID must be provided" if id.nil?
+      endpoint = "/rest/v1/leads/#{id}.json"
 
-      lead = ParamsGetLead.new("IDNUM", id)
-      response = send_request("ns1:paramsGetLead", {:lead_key => lead.to_hash})
-      Lead.from_hash(response[:success_get_lead][:result][:lead_record_list][:lead_record])
+      results = send_request(:get, endpoint)
+
+      results.first
     end
 
+    # Gets a lead from Marketo using their email.
+    #
+    # @param email [String] The Marketo ID of the lead to fetch.
+    # @note It is possible that this can return more than one lead - this only returns the first.
+    # @return [Hash, nil] The lead's attributes, or nil if the lead is not found.
+    # @raise [ArgumentError] if no email is provided
+    # @raise [Marketo::ApiError] if Marketo returns an error
     def get_lead_by_email(email)
-      raise Exception, "Email must be provided" if email.nil?
+      raise ArgumentError, "Email must be provided" if email.nil?
 
-      lead = ParamsGetLead.new("EMAIL", email)
-      response = send_request("ns1:paramsGetLead", {:lead_key => lead.to_hash})
-      Lead.from_hash(response[:success_get_lead][:result][:lead_record_list][:lead_record])
+      endpoint = "/rest/v1/leads.json"
+      params = {
+        filterType: "email",
+        filterValues: email
+      }
+
+      results = send_request(:get, endpoint, params: params)
+
+      results.first
     end
 
-    def sync_lead(email, cookie, user_args = {})
-      raise Exception, "Email must be provided" if email.nil?
+    # Syncs one lead to marketo, optionally with a cookie.
+    #
+    # @param attributes [Hash] The attributes of the leadto be synced.
+    # @param program [String] The program to associate the leads with.
+    # @param cookie [String] The munchkin cookie to assign to the user.
+    # @note This uses the `push` endpoint, which requires a program to generate an event.
+    # @return [Array<Hash>] The result of the sync, which usually has "id", "status" and "error" fields for each record.
+    # @raise [ArgumentError] if no email is provided
+    # @raise [Marketo::ApiError] if Marketo returns an error
+    def sync_lead(attributes, program, cookie = nil)
+      raise ArgumentError, "No attributes to sync" if attributes.nil? || attributes.empty?
+      raise ArgumentError, "Program is required" if program.nil?
+
+      endpoint = "/rest/v1/leads/push.json"
 
       if(cookie.nil? || (cookie.include?("token:") == false))
-        @cookie = ""
+        _cookie = nil
       else
-        @cookie = cookie.slice!(cookie.index("token:")..-1)
+        _cookie = cookie.slice(cookie.index("token:")..-1)
       end
 
-      lead = ParamsSyncLead.new(email, user_args)
-      response = send_request("ns1:paramsSyncLead", { :return_lead => true,
-                                                      :lead_record => lead.to_hash,
-                                                      :marketo_cookie => @cookie })
-      Lead.from_hash(response[:success_sync_lead][:result][:lead_record])
+      _attributes = attributes
+      _attributes.merge!({ "cookie" => _cookie }) unless _cookie.nil?
+
+      _body = { "input" => [_attributes] }
+      _body.merge!({ "programName" => program }) unless program.nil?
+
+      send_request(:post, endpoint, body: _body)
     end
 
-    def add_lead_to_list(idnum, list_name)
-      list = ParamsListOperation.new(list_name, idnum)
-      response = send_request("ns1:paramsListOperation", { :list_operation => "ADDTOLIST",
-                                                           :list_key => list.list_key_hash,
-                                                           :list_member_list => list.list_member_hash,
-                                                           :strict => true })
-      response[:success_list_operation][:result][:success]
-    end
-
+    # Syncs multiple leads to marketo.
+    #
+    # @param leads_array [Array<Hash>] Attributes of the lead to be synced.
+    # @return [Array<Hash>] The result of the sync, which usually has "id", "status" and "error" fields for each record.
+    # @raise [ArgumentError] if no leads are provided
+    # @raise [Marketo::ApiError] if Marketo returns an error
     def sync_multiple(leads_array)
-      raise Exception, "Empty leads hash, nothing to sync" if leads_array.blank?
+      raise ArgumentError, "Empty leads hash, nothing to sync" if leads_array.nil? || leads_array.empty?
+      endpoint = "/rest/v1/leads.json"
 
-      lead_records = leads_array.map do |attrs|
-        ParamsSyncLead.new(attrs["Email"], attrs).to_hash
-      end
+      body = { "input" => leads_array }
 
-      response = send_request("ns1:paramsSyncMultipleLeads", lead_record_list: { lead_record: lead_records })
-      normalize_response(response[:success_sync_multiple_leads][:result][:sync_status_list][:sync_status])
-    end
-
-    private
-
-    # Wraps single lead response into array
-    def normalize_response(response)
-      response.is_a?(Hash) ? [response] : response
-    end
-  end
-
-  # {https://na-l.marketo.com/soap/mktows/1_6}GetLead
-  #
-  #   success - SOAP::SOAPBoolean
-  class ParamsGetLead
-    attr_accessor :key_type
-    attr_accessor :key_value
-
-    def initialize(key_type = "EMAIL", key_value = nil)
-      @key_type = key_type
-      @key_value = key_value
-    end
-
-    def to_hash
-      {
-        :key_type => @key_type,
-        :key_value => @key_value
-      }
-    end
-  end
-
-  # {https://na-l.marketo.com/soap/mktows/1_6}SyncLead
-  #
-  #   success - SOAP::SOAPBoolean
-  class ParamsSyncLead
-    attr_accessor :id
-    attr_accessor :email
-    attr_accessor :cookie
-    attr_accessor :attributes
-
-    def initialize(email, user_args = {})
-      @email = email
-
-      @attributes = []
-      user_args.each_pair do |name, val|
-        @attributes << to_attribute_hash(name, val)
-      end
-    end
-
-    def to_hash
-      {
-        "Email" => @email,
-        :lead_attribute_list => {
-          :attribute => @attributes
-        }
-      }
-    end
-
-    def to_attribute_hash(key, value, type = "string")
-      { "attrName" => key, "attrValue" => value, "attrType" => type }
-    end
-  end
-
-  # {https://na-l.marketo.com/soap/mktows/1_6}ListOperation
-  #
-  #   success - SOAP::SOAPBoolean
-  class ParamsListOperation
-    attr_accessor :list_name
-    attr_accessor :key_value
-
-    def initialize(list_name, key_value)
-      @list_name = list_name
-      @key_value = key_value
-    end
-
-    def list_key_hash
-      {
-        :key_type => "MKTOLISTNAME", :key_value => @list_name
-      }
-    end
-
-    def list_member_hash
-      {
-        :lead_key => {:key_type => "IDNUM", :key_value => @key_value}
-      }
-    end
-  end
-
-  class AuthenticationHeader < Struct.new(:access_key, :secret_key)
-    DIGEST = OpenSSL::Digest.new('sha1')
-
-    def to_hash
-      request_timestamp = DateTime.now.to_s
-      {
-        "mktowsUserId"     => access_key,
-        "requestSignature" => calculate_signature(request_timestamp),
-        "requestTimestamp" => request_timestamp
-      }
-    end
-
-    private
-
-    def calculate_signature(request_timestamp_string)
-      string_to_encrypt = request_timestamp_string.to_s + access_key
-      OpenSSL::HMAC.hexdigest(DIGEST, secret_key, string_to_encrypt)
+      send_request(:post, endpoint, body: body)
     end
   end
 end

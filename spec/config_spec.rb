@@ -4,25 +4,27 @@ describe Marketo do
     describe "default" do
       it "should return structure with default values" do
         result = Marketo::Config.default
-        result.wsdl_document.should == "https://app.marketo.com/soap/mktows/2_2?WSDL"
-        result.access_key.should be_nil
-        result.secret_key.should be_nil
-        result.wsdl_endpoint.should be_nil
+        expect(result.client_id).to be_nil
+        expect(result.client_secret).to be_nil
+        expect(result.rest_endpoint).to be_nil
+        expect(result.identity_endpoint).to be_nil
       end
     end
 
     describe "merge_params!" do
       it "merges hash of params to existing config" do
-        test_hash = { access_key: "some_key",
-                      secret_key: "some_secret",
-                      wsdl_endpoint: "https://some.mktoapi.com/soap/mktows/2_2"
+        test_hash = { client_id: "some_key",
+                      client_secret: "some_secret",
+                      rest_endpoint: "https://123-ABC-001.mktorest.com/rest",
+                      identity_endpoint: "https://123-ABC-001.mktorest.com/identity"
                     }
+
         config_hash = Marketo::Config.default
         config_hash.merge_params!(test_hash)
-        config_hash.wsdl_document.should == "https://app.marketo.com/soap/mktows/2_2?WSDL"
-        config_hash.access_key.should == "some_key"
-        config_hash.secret_key.should == "some_secret"
-        config_hash.wsdl_endpoint.should == "https://some.mktoapi.com/soap/mktows/2_2"
+        expect(config_hash.client_id).to eq(test_hash[:client_id])
+        expect(config_hash.client_secret).to eq(test_hash[:client_secret])
+        expect(config_hash.rest_endpoint).to eq(test_hash[:rest_endpoint])
+        expect(config_hash.identity_endpoint).to eq(test_hash[:identity_endpoint])
       end
     end
   end

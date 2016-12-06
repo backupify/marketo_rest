@@ -1,10 +1,8 @@
 module Marketo
-  class Config < Struct.new(:access_key, :secret_key, :wsdl_endpoint, :wsdl_document)
+  class Config < Struct.new(:rest_endpoint, :identity_endpoint, :client_id, :client_secret)
 
     def self.default
-      config = new
-      config.wsdl_document = "https://app.marketo.com/soap/mktows/2_2?WSDL"
-      config
+      new
     end
 
     def merge_params!(other_params)
